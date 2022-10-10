@@ -1,5 +1,6 @@
 #include "Window.h"
 wxBEGIN_EVENT_TABLE(Window, wxFrame)
+EVT_BUTTON(0, Button0)
 EVT_BUTTON(1, Button1)
 EVT_BUTTON(2, Button2)
 EVT_BUTTON(3, Button3)
@@ -9,7 +10,6 @@ EVT_BUTTON(6, Button6)
 EVT_BUTTON(7, Button7)
 EVT_BUTTON(8, Button8)
 EVT_BUTTON(9, Button9)
-EVT_BUTTON(0, Button0)
 EVT_BUTTON(10, Button10)
 EVT_BUTTON(11, Button11)
 EVT_BUTTON(12, Button12)
@@ -53,19 +53,8 @@ Window::Window() : wxFrame(nullptr, wxID_ANY, "Calculator", wxPoint(0,0), wxSize
 	buttonTan = new wxButton(this, 21, "Tan", wxPoint(230, 670), wxSize(butsize, butsize));
 	buttonEq = new wxButton(this, 22, "=", wxPoint(340, 560), wxSize(butsize, (2 * butsize)+10));
 
-
 	Display = new wxTextCtrl(this, wxID_ANY, "", wxPoint(10, 10), wxSize(430, 100));
-
 }
-
-void Window::OnButtonClick(wxCommandEvent& evnt)
-{
-	Display->AppendText(button1->GetLabel());
-	evnt.Skip();
-}
-
-
-
 void Window::Button0(wxCommandEvent& evnt)
 {
 	Display->AppendText(button0->GetLabel());
@@ -119,22 +108,20 @@ void Window::Button9(wxCommandEvent& evnt)
 }
 void Window::Button10(wxCommandEvent& evnt)
 {
-	wxString dsplyd = Display->GetValue();
+	dsplyd = Display->GetValue();
 	Display->AppendText("+");
 	evnt.Skip();
-
-
 }
 void Window::Button11(wxCommandEvent& evnt)
 {
-	wxString dsplyd = Display->GetValue();
+	dsplyd = Display->GetValue();
 	Display->AppendText("-");
 	evnt.Skip();
 
 }
 void Window::Button12(wxCommandEvent& evnt)
 {
-	wxString dsplyd = Display->GetValue();
+	dsplyd = Display->GetValue();
 	Display->AppendText("/");
 	evnt.Skip();
 
@@ -151,7 +138,7 @@ void Window::Button14(wxCommandEvent& evnt)
 }
 void Window::Button15(wxCommandEvent& evnt)
 {
-	wxString dsplyd = Display->GetValue();
+	dsplyd = Display->GetValue();
 	Display->AppendText("*");
 	evnt.Skip();
 }
@@ -159,22 +146,17 @@ void Window::Button16(wxCommandEvent& evnt)
 {
 		
 	if (Display->GetValue().Contains('-'))
-	{
-		wxString dsplyd = Display->GetValue();
+	{	dsplyd = Display->GetValue();
 		int num = wxAtoi(dsplyd);
 		dsplyd << (num);
-		Display->Clear();
-		Display->Update();
-		Display->ChangeValue(dsplyd);
+		Display->SetValue(dsplyd);
 		evnt.Skip();
 	}
-	else {
-		wxString dsplyd = Display->GetValue();
+	else 
+	{	dsplyd = Display->GetValue();
 		int num = wxAtoi(dsplyd);
 		dsplyd << (-1 * num);
-		Display->Clear();
-		Display->Update();
-		Display->ChangeValue(dsplyd);
+		Display->SetValue(dsplyd);
 		evnt.Skip(); 
 	}
 }
@@ -201,5 +183,45 @@ void Window::Button21(wxCommandEvent& evnt)
 }
 void Window::Button22(wxCommandEvent& evnt)
 {
+	dsplyd = Display->GetValue();
+	if (dsplyd.Contains('+') || dsplyd.Contains('-') || dsplyd.Contains('/') || dsplyd.Contains('*'))
+	{
+		if (dsplyd.Contains('+'))
+		{
+			int num1 = wxAtoi(dsplyd.BeforeFirst('+'));
+			int num2 = wxAtoi(dsplyd.AfterFirst('+'));
+			wxString math;
+			math << (num1 + num2);
+			Display->AppendText(" = " + math);
+			evnt.Skip();
+		}
+		if (dsplyd.Contains('-'))
+		{
+			int num1 = wxAtoi(dsplyd.BeforeFirst('-'));
+			int num2 = wxAtoi(dsplyd.AfterFirst('-'));
+			wxString math;
+			math << (num1 - num2);
+			Display->AppendText(" = " + math);
+			evnt.Skip();
+		}
+		if (dsplyd.Contains('*'))
+		{
+			int num1 = wxAtoi(dsplyd.BeforeFirst('*'));
+			int num2 = wxAtoi(dsplyd.AfterFirst('*'));
+			wxString math;
+			math << (num1 * num2);
+			Display->AppendText(" = " + math);
+			evnt.Skip();
+		}
+		if (dsplyd.Contains('/'))
+		{
+			int num1 = wxAtoi(dsplyd.BeforeFirst('/'));
+			int num2 = wxAtoi(dsplyd.AfterFirst('/'));
+			wxString math;
+			math << (num1 / num2);
+			Display->AppendText(" = " + math);
+			evnt.Skip();
+		}
+	}
 
 }

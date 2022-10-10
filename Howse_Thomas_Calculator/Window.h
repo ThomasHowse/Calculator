@@ -55,6 +55,7 @@ private:
 	void Button21(wxCommandEvent& evnt);
 	void Button22(wxCommandEvent& evnt);
 
+	wxString dsplyd;
 public:
 	Window();
 };
