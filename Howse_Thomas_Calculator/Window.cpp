@@ -144,19 +144,20 @@ void Window::Button15(wxCommandEvent& evnt)
 }
 void Window::Button16(wxCommandEvent& evnt)
 {
-		
-	if (Display->GetValue().Contains('-'))
-	{	dsplyd = Display->GetValue();
-		int num = wxAtoi(dsplyd);
-		dsplyd << (num);
-		Display->SetValue(dsplyd);
+	dsplyd = Display->GetValue();
+	if (dsplyd.Contains('-'))
+	{   wxString pos;
+	    int num = wxAtoi(dsplyd.AfterFirst('-'));;
+		pos << (num);
+		Display->SetValue(pos);
 		evnt.Skip();
 	}
 	else 
 	{	dsplyd = Display->GetValue();
 		int num = wxAtoi(dsplyd);
-		dsplyd << (-1 * num);
-		Display->SetValue(dsplyd);
+		wxString neg;
+		neg << (-1 * num);
+		Display->SetValue(neg);
 		evnt.Skip(); 
 	}
 }
@@ -197,8 +198,8 @@ void Window::Button22(wxCommandEvent& evnt)
 		}
 		if (dsplyd.Contains('-'))
 		{
-			int num1 = wxAtoi(dsplyd.BeforeFirst('-'));
-			int num2 = wxAtoi(dsplyd.AfterFirst('-'));
+			int num1 = wxAtoi(dsplyd.BeforeLast('-'));
+			int num2 = wxAtoi(dsplyd.AfterLast('-'));
 			wxString math;
 			math << (num1 - num2);
 			Display->AppendText(" = " + math);
