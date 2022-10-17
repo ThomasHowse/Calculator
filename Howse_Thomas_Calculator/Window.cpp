@@ -187,6 +187,10 @@ void Window::Button22(wxCommandEvent& evnt)
 	dsplyd = Display->GetValue();
 	if (dsplyd.Contains('+') || dsplyd.Contains('-') || dsplyd.Contains('/') || dsplyd.Contains('*'))
 	{
+		if (dsplyd.Contains('(') && dsplyd.Contains(')'))
+		{
+
+		}
 		if (dsplyd.Contains('+'))
 		{
 			int num1 = wxAtoi(dsplyd.BeforeFirst('+'));
